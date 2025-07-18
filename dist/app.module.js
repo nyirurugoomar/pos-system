@@ -11,7 +11,6 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const auth_module_1 = require("./auth/auth.module");
-const users_module_1 = require("./users/users.module");
 const products_module_1 = require("./products/products.module");
 const categories_module_1 = require("./categories/categories.module");
 const inventory_module_1 = require("./inventory/inventory.module");
@@ -35,7 +34,7 @@ exports.AppModule = AppModule = __decorate([
                 isGlobal: true,
             }),
             mongoose_1.MongooseModule.forRoot(process.env.DB_URI),
-            auth_module_1.AuthModule, users_module_1.UsersModule, products_module_1.ProductsModule, categories_module_1.CategoriesModule, inventory_module_1.InventoryModule, orders_module_1.OrdersModule, cart_module_1.CartModule, payments_module_1.PaymentsModule, pos_module_1.PosModule, reports_module_1.ReportsModule, stores_module_1.StoresModule, utils_module_1.UtilsModule,
+            auth_module_1.AuthModule, products_module_1.ProductsModule, categories_module_1.CategoriesModule, inventory_module_1.InventoryModule, orders_module_1.OrdersModule, cart_module_1.CartModule, payments_module_1.PaymentsModule, pos_module_1.PosModule, reports_module_1.ReportsModule, stores_module_1.StoresModule, utils_module_1.UtilsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
