@@ -1,4 +1,4 @@
-import { Body, Controller, Post,Get,Param , Delete, Put } from '@nestjs/common';
+import { Body, Controller, Post,Get,Param , Delete, Put, Query } from '@nestjs/common';
 import { ProductDto } from './dto/product';
 import { ProductsService } from './products.service';
 import { Product } from './schemas/product.schema';
@@ -6,6 +6,26 @@ import { Product } from './schemas/product.schema';
 @Controller('products')
 export class ProductsController {
     constructor(private readonly productsService: ProductsService) {}
+
+    @Get('search')
+    async searchProducts(@Query('query') query: string): Promise<Product[]> {
+        return this.productsService.searchProducts(query);
+    }
+
+    @Get('search-with-filters')
+    async searchProductsWithFilters(
+        @Query('q') query?: string,
+        @Query('minPrice') minPrice?: number,
+        @Query('maxPrice') maxPrice?: number,
+        @Query('category') category?: string,
+    ): Promise<Product[]> {
+        return this.productsService.searchProductsWithFilters({
+            query,
+            minPrice,
+            maxPrice,
+            category,
+        });
+    }
 
     @Post()
     async createProduct(@Body() product: ProductDto): Promise<Product> {

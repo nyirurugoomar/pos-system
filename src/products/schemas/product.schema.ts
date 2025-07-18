@@ -16,7 +16,14 @@ export class Product extends Document {
 
     @Prop({ required: true })
     image: string;
+    @Prop()
+    category: string;
 
+    @Prop({ default: 0 })
+    stock: number;
+
+    @Prop({ default: true })
+    isActive: boolean;
    
     
     

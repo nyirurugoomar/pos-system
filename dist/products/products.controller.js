@@ -20,6 +20,17 @@ let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
     }
+    async searchProducts(query) {
+        return this.productsService.searchProducts(query);
+    }
+    async searchProductsWithFilters(query, minPrice, maxPrice, category) {
+        return this.productsService.searchProductsWithFilters({
+            query,
+            minPrice,
+            maxPrice,
+            category,
+        });
+    }
     async createProduct(product) {
         return this.productsService.createProduct(product);
     }
@@ -37,6 +48,23 @@ let ProductsController = class ProductsController {
     }
 };
 exports.ProductsController = ProductsController;
+__decorate([
+    (0, common_1.Get)('search'),
+    __param(0, (0, common_1.Query)('query')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductsController.prototype, "searchProducts", null);
+__decorate([
+    (0, common_1.Get)('search-with-filters'),
+    __param(0, (0, common_1.Query)('q')),
+    __param(1, (0, common_1.Query)('minPrice')),
+    __param(2, (0, common_1.Query)('maxPrice')),
+    __param(3, (0, common_1.Query)('category')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number, Number, String]),
+    __metadata("design:returntype", Promise)
+], ProductsController.prototype, "searchProductsWithFilters", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

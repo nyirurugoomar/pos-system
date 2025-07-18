@@ -21,6 +21,36 @@ let ProductsService = class ProductsService {
     constructor(productModel) {
         this.productModel = productModel;
     }
+    async searchProducts(query) {
+        const searchRegex = new RegExp(query, 'i');
+        return this.productModel.find({
+            $or: [
+                { name: { $regex: searchRegex } },
+                { description: { $regex: searchRegex } }
+            ]
+        });
+    }
+    async searchProductsWithFilters(filters) {
+        const searchCriteria = {};
+        if (filters.query) {
+            const searchRegex = new RegExp(filters.query, 'i');
+            searchCriteria.$or = [
+                { name: { $regex: searchRegex } },
+                { description: { $regex: searchRegex } }
+            ];
+        }
+        if (filters.minPrice || filters.maxPrice) {
+            searchCriteria.price = {};
+            if (filters.minPrice)
+                searchCriteria.price.$gte = filters.minPrice;
+            if (filters.maxPrice)
+                searchCriteria.price.$lte = filters.maxPrice;
+        }
+        if (filters.category) {
+            searchCriteria.category = filters.category;
+        }
+        return this.productModel.find(searchCriteria);
+    }
     async createProduct(product) {
         const createdProduct = new this.productModel(product);
         return createdProduct.save();
