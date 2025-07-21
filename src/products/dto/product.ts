@@ -17,6 +17,14 @@ export class ProductDto {
     @IsNotEmpty()
     image: string;
 
+    @IsString()
+    @IsNotEmpty()
+    category: string;
+
+    @IsString()
+    @IsNotEmpty()
+    inventory: string;
+
     
     
     

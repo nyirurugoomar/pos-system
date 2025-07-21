@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
-import { InventoryModule } from './inventory/inventory.module';
+
 import { OrdersModule } from './orders/orders.module';
 import { CartModule } from './cart/cart.module';
 import { PaymentsModule } from './payments/payments.module';
@@ -22,7 +22,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DB_URI),
-    AuthModule,  ProductsModule, CategoriesModule, InventoryModule, OrdersModule, CartModule, PaymentsModule, PosModule, ReportsModule, StoresModule, UtilsModule,],
+    AuthModule,  ProductsModule, CategoriesModule,  OrdersModule, CartModule, PaymentsModule, PosModule, ReportsModule, StoresModule, UtilsModule,],
   controllers: [AppController],
   providers: [AppService],
 })

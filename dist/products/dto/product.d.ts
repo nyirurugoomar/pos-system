@@ -3,4 +3,6 @@ export declare class ProductDto {
     description: string;
     price: number;
     image: string;
+    category: string;
+    inventory: string;
 }

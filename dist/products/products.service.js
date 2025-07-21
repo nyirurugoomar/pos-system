@@ -22,13 +22,18 @@ let ProductsService = class ProductsService {
         this.productModel = productModel;
     }
     async searchProducts(query) {
+        console.log('Searching for:', query);
+        if (!query || query.trim() === '') {
+            console.log('Empty query, returning all products');
+            return this.productModel.find().populate('category', 'categoryName').populate('inventory', 'quantity');
+        }
         const searchRegex = new RegExp(query, 'i');
         return this.productModel.find({
             $or: [
                 { name: { $regex: searchRegex } },
                 { description: { $regex: searchRegex } }
             ]
-        });
+        }).populate('category', 'categoryName').populate('inventory', 'quantity');
     }
     async searchProductsWithFilters(filters) {
         const searchCriteria = {};
@@ -49,23 +54,24 @@ let ProductsService = class ProductsService {
         if (filters.category) {
             searchCriteria.category = filters.category;
         }
-        return this.productModel.find(searchCriteria);
+        return this.productModel.find(searchCriteria).populate('category', 'categoryName').populate('inventory', 'quantity');
     }
     async createProduct(product) {
         const createdProduct = new this.productModel(product);
-        return createdProduct.save();
+        const savedProduct = await createdProduct.save();
+        return this.productModel.findById(savedProduct._id).populate('category', 'categoryName');
     }
     async getProducts() {
-        return this.productModel.find();
+        return this.productModel.find().populate('category', 'categoryName');
     }
     async getProductById(id) {
-        return this.productModel.findById(id);
+        return this.productModel.findById(id).populate('category', 'categoryName');
     }
     async updateProduct(id, product) {
-        return this.productModel.findByIdAndUpdate(id, product, { new: true });
+        return this.productModel.findByIdAndUpdate(id, product, { new: true }).populate('category', 'categoryName');
     }
     async deleteProduct(id) {
-        return this.productModel.findByIdAndDelete(id);
+        return this.productModel.findByIdAndDelete(id).populate('category', 'categoryName');
     }
 };
 exports.ProductsService = ProductsService;
