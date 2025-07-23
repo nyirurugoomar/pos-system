@@ -36,11 +36,22 @@ export class OrdersService {
         .exec();
     }
 
-    async deleteOrder(id: string): Promise<Order> {
-        return this.orderModel.findByIdAndDelete(id)
+    async deleteOrder(id: string): Promise<{message: string;order: Order | null}> {
+        const deletedOrder = await this.orderModel.findByIdAndDelete(id)
         .populate('user','username')
         .populate('items.product','name')
         .exec();
+
+        if(!deletedOrder){
+            return {
+                message: 'Order not found',
+                order: null
+            }
+        }
+        return {
+            message: 'Order deleted successfully',
+            order: deletedOrder
+        }
     }
     
     
