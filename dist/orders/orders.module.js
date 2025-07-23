@@ -21,7 +21,7 @@ exports.OrdersModule = OrdersModule = __decorate([
         imports: [mongoose_1.MongooseModule.forFeature([{ name: order_schemas_1.Order.name, schema: order_schemas_1.OrderSchema }])],
         providers: [orders_service_1.OrdersService, jwt_strategy_1.JwtStrategy],
         controllers: [orders_controller_1.OrdersController],
-        exports: [jwt_strategy_1.JwtStrategy]
+        exports: [jwt_strategy_1.JwtStrategy, mongoose_1.MongooseModule]
     })
 ], OrdersModule);
 //# sourceMappingURL=orders.module.js.map
